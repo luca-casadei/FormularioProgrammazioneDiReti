@@ -1,0 +1,52 @@
+\documentclass[a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+\title{\textbf{Programmazione di Reti} \\ \textit{Formulario}}
+\author{Luca Casadei - Francesco Pazzaglia - Martin Tomassi}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\chapter{Ritardi di trasferimento}
+	\section{Tempo di trasmissione}
+	\begin{itemize}
+		\item $T_{\textit{trasmissione}}$ = Tempo di trasmissione $(s)$
+		\item $L$ = Lunghezza del pacchetto $(bit)$
+		\item $R$ = Frequenza (capacità) di trasmissione (bit-rate) $(\frac{bit}{s})$
+	\end{itemize}
+	Trasferimento di un pacchetto da router \textbf{A} a router \textbf{B}\\\\
+	{$T_{\textit{trasmissione}} = \frac{L}{R}$
+	\section{Tempo di propagazione}
+	\begin{itemize}
+		\item $D$ = Lunghezza del collegamento $(m)$
+		\item $v$ = Velocità (ritardo) di propagazione $(\frac{m}{s})$
+		\item $\tau$ = Tempo di propagazione $(s)$
+	\end{itemize}
+	Si può ricavare il tempo di propagazione:\\\\
+	$\tau = \frac{D}{v}$\\\\
+	Nel caso della suddivisione del canale in $n$ sotto-canali e considerando la lunghezza del canale totale $D$:\\\\ 
+	$\tau_{n} = \frac{\tau}{n}$
+	\section{Tempo totale}
+	Si ricava da:\\\\
+	$T_{\textit{tot}} = \tau + T_{\textit{trasmissione}} + T_{\textit{accodamento}} + T_{\textit{elaborazione}}$
+	\section{Quantità di bit presenti sul canale}
+	Si ricava attraverso:\\\\
+	$L = R * T_{\textit{propagazione}}$
+	\section{Scenari Cut-Through e Store \& Forward}
+	\subsection{Esempio con Store \& Forward}
+	Consideriamo $n$ elementi trasmissivi, avremmo $n$ tempi di tramissione: \\\\ 
+	$n * T_{trasmissione}$ \\\\
+	Consideriamo ora $k$ elementi che introducono latenza per accodamento e ritrasmissione, otteniamo: \\\\
+	$k * T_{accodamento}$\\\\
+	Con tempo di propagazione fisico $\tau$ \\\\
+	$T_{totale} = n * T_{trasmissione} + k * T_{accodamento} + \tau$
+	\subsection{Esempio con Cut-Through}
+	In questo caso si considera il tempo di accodamento del solo header e non di tutto il pacchetto, sapendo che per trasmettere un pacchetto trascurando eventuali tempi di elaborazione è: $T_{H} + (T - T_{H})$, da questo si ottiene che:\\\\
+	$T_{totale} = n * T + k * T_{H} + \tau$
+\end{document}
