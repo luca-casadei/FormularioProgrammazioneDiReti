@@ -17,11 +17,11 @@
 	\section{Tempo di trasmissione}
 	\begin{itemize}
 		\item $T_{\textit{trasmissione}}$ = Tempo di trasmissione $(s)$
-		\item $L$ = Lunghezza del pacchetto $(bit)$
-		\item $R$ = Frequenza (capacità) di trasmissione (bit-rate) $(\frac{bit}{s})$
+		\item $L$ = Lunghezza del pacchetto $(bit)$ \label{st:hlen}
+		\item $R$ = Frequenza (capacità) di trasmissione (bit-rate) $(\frac{bit}{s})$ \label{it:capacity}
 	\end{itemize}
 	Trasferimento di un pacchetto da router \textbf{A} a router \textbf{B}\\\\
-	{$T_{\textit{trasmissione}} = \frac{L}{R}$
+	{$T_{\textit{trasmissione}} = \frac{L}{R}$ \label{em:transtime}
 	\section{Tempo di propagazione}
 	\begin{itemize}
 		\item $D$ = Lunghezza del collegamento $(m)$
@@ -47,6 +47,40 @@
 	Con tempo di propagazione fisico $\tau$ \\\\
 	$T_{totale} = n * T_{trasmissione} + k * T_{accodamento} + \tau$
 	\subsection{Esempio con Cut-Through}
-	In questo caso si considera il tempo di accodamento del solo header e non di tutto il pacchetto, sapendo che per trasmettere un pacchetto trascurando eventuali tempi di elaborazione è: $T_{H} + (T - T_{H})$, da questo si ottiene che:\\\\
+	In questo caso si considera il tempo di accodamento del solo header e non di tutto il pacchetto, sapendo che per trasmettere un pacchetto trascurando eventuali tempi di elaborazione è: $T_{H} + (T - T_{H})$, da questo si ottiene che con header $H$:\\\\
 	$T_{totale} = n * T + k * T_{H} + \tau$
+	\chapter{Round-Trip-Time (RTT)} \label{cp:rtt}
+	\section{Capacità di propagazione}
+	\begin{itemize}
+		\item $C = R$ come nella sezione precedente \ref{it:capacity}, è la capacità o frequenza di trasmissione.
+	\end{itemize}
+	\section{RTT}
+	\begin{itemize}
+		\item $T_{ack} =$ Tempo acknowledge.
+	\end{itemize}
+	Equivale al $T_{trasmissione}$ più tutti i tempi di elaborazione e di accodamento $T_{accodamento}$, e anche dei tempi di propagazione $\tau$, come nella sezione precedente \ref{em:transtime}, ma considerando tutta la tratta da percorrere sia per l'andata che per il ritorno (in genere si ha $2\tau$ perché va considerata la propagazione di invio e ricezione.).\\\\
+	$RTT = T_{trasmissione} + 2\tau + T_{ack}$
+	\chapter{Efficienza protocolli "ARQ"}
+	\begin{itemize}
+		\item $\text{MSS} = $ Maximum segment size (equivalente a L) \ref{st:hlen}.
+		\item $\text{SSTRESH} = $ Segment size threshold (soglia).
+		\item $\textit{CWND} = $ Congestion window.
+		\item $\text{RCWND} = $ Reciever congestion window.
+		\item $T_{trasmissione} = \frac{\text{MSS}}{R}$
+	\end{itemize}
+	Dimensione del file trasferibile nella window (unità di misura MSS) $= \frac{L}{\text{CWND}}$, considerando che la conversione in MSS si ottiene facendo:
+	$\frac{\text{RCWND}}{\text{CWND}}$ e la conversione in MSS del threshold:
+	$\frac{\text{SSTHRESH}}{\text{CWND}}$, in generale, si ha\\ $\frac{L\text{(byte)}}{\text{CWND (byte)}} = \text{MSS}$.
+	\section{Go-back-N}
+	\begin{itemize}
+		\item $W$ Numero di pacchetti della window (dimensione).
+		\item $T$ Tempo per pacchetto.
+	\end{itemize}
+	Dipende dal rapporto tra RTT \ref{cp:rtt} e la lunghezza della finestra $NT$, consideriamo il tempo di trasmissione $T_{trasmissione}$ e il tempo di propagazione $\tau$:\\
+	Dobbiamo avere $WT \geq RTT \implies$ sviluppando i calcoli si ottiene $W>x$ dove $x$ è il numero di pacchetti da mandare prima dell'acknowledge per avere un'efficienza $1$. \\
+	La trasmissione è continua quando $WT \geq RTT$ \\ (discontinua quando $WT < RTT$)
+	\section{Stop \& Wait}
+	\begin{itemize}
+		\item Efficienza $\eta = \frac{T_{trasmissione}}{T_{trasmissione} + T_{propagazione}}$
+	\end{itemize}
 \end{document}
