@@ -83,4 +83,27 @@
 	\begin{itemize}
 		\item Efficienza $\eta = \frac{T_{trasmissione}}{T_{trasmissione} + T_{propagazione}}$
 	\end{itemize}
+	\chapter{Livello Applicazione}
+	\section{Differenza di SAP per i protocolli TCP-UDP}
+	Nel server UDP non esiste un socket di benvenuto, mentre in un socket TCP sono richiesti due socket per poter effettuare la connessione, per supportare quindi $n$ connessioni simultanee, sono richiesti $n + 1$ socket.
+	\section{HTTP}
+	\begin{itemize}
+		\item $\Delta$ = Tempo medio richiesto per inviare un oggetto sul collegamento. (In genere questo è riconducibile a \ref{em:transtime})
+		\item $\beta$ = Frequenza di arrivo di oggetti al collegamento di accesso.
+		\item $\Delta\beta$ = Intensità del traffico. (Può essere ridotta gestendo l'elaborazione in esterno, su altre reti).
+	\end{itemize}
+	Consideriamo il ritardo medio di accesso come:
+	$\frac{\Delta}{(1 - \Delta\beta)}$
+	\subsection{Connessioni parallele e persistenti}
+	Quando si trattano $N$ connessioni parallele, il canale si divide in $\frac{1}{N}$ parti con capacità uguali, la differenza per le connessioni persistenti consiste nella possibilità di richiedere oggetti su una connessione già stabilita senza dover rieseguire la three-way-handshake (\textit{syn, ack, syn-ack}).
+	\section{Distribuzione Client-server e Peer-to-peer}
+	\begin{itemize}
+		\item $N$ = Numero di peer.
+		\item $D_{\text{cs}}$ = Tempo minimo di distribuzione (tempo necessario per far si che tutti gli $N$ peer ricevano una copia del file) per un servizio client-server.
+		\item $D_{\text{p2p}}$ = Come il precedente ma per un servizio peer-to-peer.
+		\item $F$ = Dimensione del file.
+		\item $u_{\text{s}}$ = Velocità di upload del server.
+	\end{itemize}
+	Si ottiene: $D_{\text{cs}} = \max{\{\frac{NF}{u_{\text{s}}},\frac{F}{d_{\text{min}}}\}}$\\\\
+	Si ottiene: $D_{\text{p2p}} =\max{\{\frac{F}{u_\text{s}},\frac{F}{d_{\text{min}}},\frac{NF}{(u_\text{s} + \sum_{i = 1}^{N}(u_i))}\}} $
 \end{document}
